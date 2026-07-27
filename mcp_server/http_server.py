@@ -19,7 +19,17 @@ from graph.build_graph import build_graph
 from graph.nodes.migration import run_migration
 from db.models import init_db, save_run
 
-mcp = FastMCP("db-architect")
+from mcp.server.transport_security import TransportSecuritySettings
+
+mcp = FastMCP(
+    "db-architect",
+    host="0.0.0.0",
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=["localhost:*", "127.0.0.1:*", "db-designer-17p4.onrender.com"],
+        allowed_origins=["http://localhost:*", "https://db-designer-17p4.onrender.com"],
+    ),
+)
 _graph = build_graph()
 init_db()
 
@@ -87,6 +97,6 @@ def migrate_schema(source_schema: str, target_type: str) -> str:
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8001))
-    mcp.settings.host = "0.0.0.0"
+    # mcp.settings.host = "0.0.0.0"
     mcp.settings.port = port
     mcp.run(transport="sse")
