@@ -4,7 +4,7 @@ import MermaidDiagram from "./MermaidDiagram";
 import HistoryPanel from "./HistoryPanel";
 import MigratePanel from "./MigratePanel";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
 
 interface Attribute {
   name: string;
@@ -200,7 +200,7 @@ function App() {
       <HistoryPanel onSelectRun={handleSelectRun} />
       <MigratePanel />
 
-      
+
       {error && (
         <div className="section">
           <p className="error">Error: {error}</p>

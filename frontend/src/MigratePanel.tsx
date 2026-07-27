@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 // import MermaidDiagram from "./MermaidDiagram";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
 
 interface MigrateResult {
   source_type: string;
